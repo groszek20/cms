@@ -40,11 +40,10 @@
                             <tbody>
                                 <tr>
                                     <td>identyfikator</td>
-                                    <td>Kategoria</td>
+                                    <td>kategoria</td>
                                 </tr>     
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
