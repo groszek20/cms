@@ -26,11 +26,9 @@
                             if ($cat_title == '' || empty($cat_title)) {
                                 echo "This field should not be empty";
                             } else {
-                                echo $cat_title;
                                 $query = "INSERT INTO `category`(`cat_title`) VALUE('".$cat_title."')";
-                                echo $query;
                                 $insert_categories = mysqli_query($connection, $query);
-                                if(!$insert_categories){
+                                if (!$insert_categories) {
                                     die('QUERY FAILED'.mysqli_error($connection));
                                 }
                             }
@@ -64,12 +62,19 @@
                                     $cat_title = $row['cat_title'];
                                     $cat_id = $row['cat_id'];
                                     echo "<tr><td>{$cat_id}</td>";
-                                    echo "<td>{$cat_title}</td></tr>";
+                                    echo "<td>{$cat_title}</td>";
+                                    echo "<td><a href='../admin/categories.php?delete=".$cat_id."'>Delete</td></tr>";
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </div>
+                    <?php
+                    if (isset($_GET['delete'])) {
+                        $delete_guery = "DELETE FROM `category` WHERE cat_id = '".$_GET["delete"]."'";
+                        $delete_categories = mysqli_query($connection, $delete_guery);
+                    }
+                    ?>
                 </div>
             </div>
             <!-- /.row -->
