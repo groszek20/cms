@@ -43,11 +43,17 @@
                                 <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                             </div>
                         </form>
+                        <form action="" method="post">
+                            <div class="form-group">
+                                <label for="cat_title">Add Category</label>
+                                <input type="text" class="form-control" name="cat_title">
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
+                            </div>
+                        </form>
                     </div>
-                    <?php
-                    $query = "SELECT * FROM `category` ";
-                    $select_categories = mysqli_query($connection, $query);
-                    ?>
+
                     <div class="col-xs-6">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -58,23 +64,26 @@
                             </thead>
                             <tbody>
                                 <?php
+                                $query = "SELECT * FROM `category` ";
+                                $select_categories = mysqli_query($connection, $query);
                                 while ($row = mysqli_fetch_assoc($select_categories)) {
                                     $cat_title = $row['cat_title'];
                                     $cat_id = $row['cat_id'];
                                     echo "<tr><td>{$cat_id}</td>";
                                     echo "<td>{$cat_title}</td>";
-                                    echo "<td><a href='../admin/categories.php?delete=".$cat_id."'>Delete</td></tr>";
+                                    echo "<td><a href='categories.php?delete=".$cat_id."'>Delete</td>";
+                                    echo "<td><a href='categories.php?edit=".$cat_id."'>Edit</td></tr>";
+                                }
+
+                                if (isset($_GET['delete'])) {
+                                    $delete_guery = "DELETE FROM `category` WHERE cat_id = '".$_GET["delete"]."'";
+                                    $delete_categories = mysqli_query($connection, $delete_guery);
+                                    header("Location: categories.php");
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </div>
-                    <?php
-                    if (isset($_GET['delete'])) {
-                        $delete_guery = "DELETE FROM `category` WHERE cat_id = '".$_GET["delete"]."'";
-                        $delete_categories = mysqli_query($connection, $delete_guery);
-                    }
-                    ?>
                 </div>
             </div>
             <!-- /.row -->
