@@ -16,9 +16,6 @@
                         Welcome to Admin
                         <small>Author</small>
                     </h1>
-
-
-
                     <div class="col-xs-6">
                         <?php
                         if (isset($_POST['submit'])) {
@@ -34,7 +31,7 @@
                             }
                         }
                         ?>
-                        <form action="" method="post">
+                        <form action="categories.php" method="post">
                             <div class="form-group">
                                 <label for="cat_title">Add Category</label>
                                 <input type="text" class="form-control" name="cat_title">
@@ -44,27 +41,7 @@
                             </div>
                         </form>
 
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="cat_title">Edit Category</label>
-                                <?php
-                                if (isset($_GET['edit'])) {
-                                    $query = "SELECT * FROM `category` ";
-                                    $select_categories = mysqli_query($connection, $query);
-                                    while ($row = mysqli_fetch_assoc($select_categories)) {
-                                        $cat_title = $row['cat_title'];
-                                        $cat_id = $row['cat_id'];
-                                    }
-                                    ?>
-                                <input value="<?php if(isset($_GET['edit'])){ echo $cat_title;} ?>" type="text" class="form-control" name="cat_title">
-                                <?php }
-                                ?>
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Edit Category">
-                            </div>
-
-                        </form>
+                   <?php include 'includes/edit_categories.php'; ?>
                     </div>
 
                     <div class="col-xs-6">
