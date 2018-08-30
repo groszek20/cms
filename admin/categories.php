@@ -1,4 +1,8 @@
-<?php include 'includes/admin_header.php';?>
+<?php 
+include 'includes/admin_header.php';
+include 'functions.php';
+ob_start();
+?>
 
 <div id="wrapper">
 
@@ -17,20 +21,7 @@
                         <small>Author</small>
                     </h1>
                     <div class="col-xs-6">
-                        <?php
-                        if (isset($_POST['submit'])) {
-                            $cat_title = $_POST['cat_title'];
-                            if ($cat_title == '' || empty($cat_title)) {
-                                echo "This field should not be empty";
-                            } else {
-                                $query = "INSERT INTO `category`(`cat_title`) VALUE('".$cat_title."')";
-                                $insert_categories = mysqli_query($connection, $query);
-                                if (!$insert_categories) {
-                                    die('QUERY FAILED'.mysqli_error($connection));
-                                }
-                            }
-                        }
-                        ?>
+                        <?php insert_categories(); ?>
                         <form action="categories.php" method="post">
                             <div class="form-group">
                                 <label for="cat_title">Add Category</label>
@@ -40,8 +31,9 @@
                                 <input class="btn btn-primary" type="submit" name="submit" value="Add Category">
                             </div>
                         </form>
-
-                   <?php include 'includes/edit_categories.php'; ?>
+                        
+                        <?php include 'includes/edit_categories.php';?> 
+                        
                     </div>
 
                     <div class="col-xs-6">

@@ -26,7 +26,7 @@ if (isset($_GET['edit'])) {
 
 if (isset($_POST['update_category'])) {
     $updated_cat_title = $_POST['cat_title'];
-    $edit_guery = "UPDATE `category` SET `cat_title`='$updated_cat_title' WHERE `cat_id`=$cat_id";
+    $edit_guery = "UPDATE `category` SET `cat_title`='{$updated_cat_title}' WHERE `cat_id`={$cat_id}";
     $edit_categories = mysqli_query($connection, $edit_guery);
     if (!$edit_categories) {
         die("QUERY FAILED".mysqli_errno($connection));
