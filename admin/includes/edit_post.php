@@ -4,6 +4,8 @@ if (isset($_GET['p_id'])) {
     $the_post_id = $_GET['p_id'];
 }
 
+
+
 $query = "SELECT * FROM `posts` WHERE post_id = {$the_post_id} ";
 $select_posts_by_id = mysqli_query($connection, $query);
 
@@ -29,20 +31,14 @@ if (isset($_POST['update_post'])) {
     $post_tags = $_POST['post_tags'];
     $post_status = $_POST['post_status'];
     $post_content = $_POST['post_content'];
-    
-    if(empty($post_image)){
-        $query = "SELECT * FROM `posts` WHERE post_id = {$the_post_id}";
-        $select_image = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_array($select_image)){
-            $post_image = $row['$post_image'];
-        }
-    }
-     move_uploaded_file($post_image_temp, "../images/$post_image");
+
+    move_uploaded_file($post_image_temp, "../images/$post_image");
+
     $update_post_query = "UPDATE `posts` SET "
-    . "post_category_id = '{$post_category_id}', post_title = '{$post_title}', post_author = '{$post_author}', post_date = now(), "
-    . "post_image = '{$post_image}', post_content = '{$post_content}', post_tags = '{$post_tags}', "
-    . "post_status = '{$post_status}' WHERE post_id = '{$the_post_id}'";
-    
+    ."post_category_id = '{$post_category_id}', post_title = '{$post_title}', post_author = '{$post_author}', post_date = now(), "
+    ."post_image = '{$post_image}', post_content = '{$post_content}', post_tags = '{$post_tags}', "
+    ."post_status = '{$post_status}' WHERE post_id = '{$the_post_id}'";
+
     $update_post = mysqli_query($connection, $update_post_query);
     confirmQuery($update_post);
 }
@@ -59,7 +55,7 @@ if (isset($_POST['update_post'])) {
         <select name="post_category" id="post_category">
 
             <?php
-            $query= "SELECT * FROM `category`";
+            $query = "SELECT * FROM `category`";
             $select_categories = mysqli_query($connection, $query);
             confirmQuery($select_categories);
             while ($row = mysqli_fetch_assoc($select_categories)) {
