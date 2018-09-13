@@ -1,4 +1,7 @@
 <?php
+
+include '../admin/functions.php';
+
 if (isset($_POST['create_post'])) {
     $post_title = $_POST['title'];
     $post_author = $_POST['author'];
@@ -17,8 +20,6 @@ if (isset($_POST['create_post'])) {
     ."VALUE({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
 
     $create_post_query = mysqli_query($connection, $query);
-
-    confirmQuery($create_post_query);
 }
 ?>
 
@@ -27,10 +28,21 @@ if (isset($_POST['create_post'])) {
         <label for="title">Post Title</label>
         <input type="text" class="form-control" name="title">
     </div>
+    
+        <div class="form-group">
+        <select name="post_category_id" id="post_category">
 
-    <div class="form-group">
-        <label for="post_category">Category Id</label>
-        <input type="text" class="form-control" name="post_category_id">
+            <?php
+            $query = "SELECT * FROM `category`";
+            $select_categories = mysqli_query($connection, $query);
+            confirmQuery($select_categories);
+            while ($row = mysqli_fetch_assoc($select_categories)) {
+                $cat_title = $row['cat_title'];
+                $cat_id = $row['cat_id'];
+                echo "<option value='{$cat_id}'>{$cat_title}</option>";
+            }
+            ?>     
+        </select>
     </div>
 
     <div class="form-group">
