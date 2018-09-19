@@ -53,12 +53,22 @@
             ?>
             <!-- Blog Comments -->
 
-            <?php 
-                if(isset($_POST['create_comment'])){
-                    $comment_author = $_GET['comment_author'];
-                    $comment_email = $_GET['comment_email'];
-                    $comment = $_GET['comment'];
+            <?php
+            if (isset($_POST['create_comment'])) {
+
+                $the_post_id = $_GET['p_id'];
+
+                $comment_author = $_POST['comment_author'];
+                $comment_email = $_POST['comment_email'];
+                $comment_content = $_POST['comment'];
+
+                $query_comment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)"
+                ."VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
+                $create_comment_query = mysqli_query($connection, $query_comment);
+                if (!$create_comment_query) {
+                    die('QUERY FAILED'.mysqli_error($connection));
                 }
+            }
             ?>
             <!-- Comments Form -->
             <div class="well">
@@ -73,13 +83,13 @@
                         <label for="Email">Email</label>
                         <input type="email" name="comment_email" class="form-control" name="comment_email">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="Comment">Your Comment</label>
                         <textarea class="form-control" name="comment" rows="3"></textarea>
                     </div>
 
-                    <button type="submit" name="create-comment" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                 </form>
             </div>
 
@@ -129,11 +139,11 @@
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
-        <?php include "includes/sidebar.php";?>
+<?php include "includes/sidebar.php";?>
 
     </div>
     <!-- /.row -->
 
     <hr>
     <!-- Footer -->
-    <?php include "includes/footer.php";?>
+<?php include "includes/footer.php";?>
