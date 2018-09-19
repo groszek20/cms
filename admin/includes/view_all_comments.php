@@ -5,12 +5,14 @@
                 <th>Id</th>
                 <th>Author</th>
                 <th>Comment</th>
+                <th>Post Title</th>
                 <th>Email</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Approve</th>
                 <th>UnApprove</th>
                 <th>Delete</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -30,14 +32,13 @@
                 echo "<td>$comment_id</td>";
                 echo "<td>$comment_author</td>";
                 echo "<td>$comment_content</td>";
-
-//                $query_title = "SELECT * FROM `category` WHERE `cat_id` = $post_category_id  ";
-//                $select_categories = mysqli_query($connection, $query_title);
-//                while ($row = mysqli_fetch_assoc($select_categories)) {
-//                    $cat_title = $row['cat_title'];
-//                    echo "<td>$cat_title</td>";
-//                }
-
+                $query_title = "SELECT * FROM `posts` WHERE `post_id` = $comment_post_id  ";
+                $select_categories = mysqli_query($connection, $query_title);
+                while ($row = mysqli_fetch_assoc($select_categories)) {
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    echo "<td><a href='../post.php?p_id=$post_id'>$post_title</td>";
+                }
                 echo "<td>$comment_email</td>";
                 echo "<td>$comment_status</td>";
                 echo "<td>$comment_date</td>";
