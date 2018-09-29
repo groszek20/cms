@@ -68,6 +68,9 @@
                 if (!$create_comment_query) {
                     die('QUERY FAILED'.mysqli_error($connection));
                 }
+
+                $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id";
+                $update_query_count = mysqli_query($connection, $query);
             }
             ?>
             <!-- Comments Form -->
@@ -112,10 +115,10 @@
                         <img class="media-object" src="http://placehold.it/64x64" alt="">
                     </a>
                     <div class="media-body">
-                        <h4 class="media-heading"><?php echo $comment_author; ?>
-                            <small><?php echo $comment_date; ?></small>
+                        <h4 class="media-heading"><?php echo $comment_author;?>
+                            <small><?php echo $comment_date;?></small>
                         </h4>
-                        <?php echo $comment_content; ?>
+                        <?php echo $comment_content;?>
                     </div>
                 </div>
                 <?php
