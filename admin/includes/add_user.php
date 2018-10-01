@@ -33,7 +33,7 @@ if (isset($_POST['create_post'])) {
         <input type="text" class="form-control" name="user_lastname">
     </div>
 
-            <div class="form-group">
+    <div class="form-group">
         <select name="post_category_id" id="post_category">
 
             <?php
@@ -48,7 +48,7 @@ if (isset($_POST['create_post'])) {
             ?>     
         </select>
     </div>
-    
+
     <div class="form-group">
         <label for="post_status">Password</label>
         <input type="password" class="form-control" name="user_password">
