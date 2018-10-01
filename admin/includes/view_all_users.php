@@ -8,6 +8,7 @@
                 <th>Lastname</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Add User</th>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@
                 echo "<td>$user_lastname</td>";
                 echo "<td>$user_email</td>";
                 echo "<td>$user_role</td>";
+                echo "<td><a href='users.php?source=add_user'>Add User</a></td>";
                 echo "</tr>";
             }
             ?>
