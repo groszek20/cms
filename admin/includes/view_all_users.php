@@ -8,7 +8,9 @@
                 <th>Lastname</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th>Add User</th>
+                <th>Edit User</th>
+                <th>Delete User</th>
+                <th>Change role</th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +32,13 @@
                 echo "<td>$user_lastname</td>";
                 echo "<td>$user_email</td>";
                 echo "<td>$user_role</td>";
-                echo "<td><a href='users.php?source=add_user'>Add User</a></td>";
+                echo "<td><a href='users.php?source=edit_user&edit={$user_id}'>Edit User</a></td>";
+                echo "<td><a href='users.php?delete={$user_id}'>Delete User</a></td>";
+                if ($user_role === 'admin'){
+                    echo "<td><a href='users.php?change_to_subscriber={$user_id}'>Subscriber</a></td>";
+                } else {
+                    echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+                }
                 echo "</tr>";
             }
             ?>
@@ -38,3 +46,25 @@
     </table>
 </div>
 
+<?php
+if (isset($_GET['delete'])) {
+    $the_user_id = $_GET['delete'];
+    $query = "DELETE FROM users WHERE user_id={$the_user_id}";
+    $delete_query = mysqli_query($connection, $query);
+    header("Location: ../admin/users.php");
+}
+
+if (isset($_GET['change_to_subscriber'])) {
+    $the_user_id = $_GET['change_to_subscriber'];
+    $query = "UPDATE `users` SET user_role = 'subscriber' WHERE user_id = {$the_user_id} ";
+    $update_query = mysqli_query($connection, $query);
+    header("Location: ../admin/users.php");
+}
+
+if (isset($_GET['change_to_admin'])) {
+    $the_user_id = $_GET['change_to_admin'];
+    $query = "UPDATE `users` SET user_role = 'admin' WHERE user_id = {$the_user_id} ";
+    $update_query = mysqli_query($connection, $query);
+    header("Location: ../admin/users.php");
+}
+?>
