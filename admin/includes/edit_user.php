@@ -47,8 +47,17 @@ if (isset($_POST['edit_user'])) {
 
     <div class="form-group">
         <select name="user_role" id="">
-            <option value="admin">Admin</option>
-            <option value="subscriber">Subscriber</option>
+            <option value="<?php echo $edited_user_role; ?>"><?php 
+            $upf_user_role = ucfirst ($edited_user_role);
+            echo $upf_user_role; ?></option>
+            
+            <?php 
+            if($edited_user_role == 'admin'){
+                echo '<option value="subscriber">Subscriber</option>';
+            } else {
+                 echo '<option value="admin">Admin</option>';
+            }
+            ?>         
         </select>
     </div>
 
