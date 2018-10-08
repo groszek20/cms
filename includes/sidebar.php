@@ -15,6 +15,24 @@
         <!-- /.input-group -->
     </div>
 
+    <!-- Login Form -->
+    <div class="well">
+        <h4>Sign in</h4>
+        <form action="includes/login.php" method="post">
+            <div class="form-group">
+                <input name="username" type="text" class="form-control" placeholder="Enter Username">
+            </div>
+            <div class="input-group">
+                <input name="password" type="password" class="form-control" placeholder="Enter Password">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" name="login" type="submit">Sign in</button>
+                </span>
+            </div>
+
+        </form>
+        <!-- /.input-group -->
+    </div>
+
     <!-- Blog Categories Well -->
 
     <div class="well">
@@ -23,7 +41,7 @@
             <div class="col-lg-12">
                 <ul class="list-unstyled">
                     <?php
-                    $query = "SELECT * FROM `category` LIMIT 4";
+                    $query = "SELECT * FROM `category`";
                     $select_categories = mysqli_query($connection, $query);
 
                     while ($row = mysqli_fetch_assoc($select_categories)) {
