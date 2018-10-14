@@ -1,6 +1,6 @@
 <?php
 include 'includes/admin_header.php';
-include 'functions.php';
+//include 'functions.php';
 ob_start();
 ?>
 
@@ -21,7 +21,21 @@ ob_start();
                         <small>Author</small>
                     </h1>
                     <div class="col-xs-6">
-                        <?php insert_categories();?>
+
+                        <?php
+                        if (isset($_POST['submit'])) {
+                            $cat_title = $_POST['cat_title'];
+                            if ($cat_title == '' || empty($cat_title)) {
+                                echo "This field should not be empty";
+                            } else {
+                                $query_inser_into = "INSERT INTO `category`(`cat_title`) VALUE('".$cat_title."')";
+                                $insert_categories = mysqli_query($connection, $query_inser_into);
+                                if (!$insert_categories) {
+                                    die('QUERY FAILED'.mysqli_error($connection));
+                                }
+                            }
+                        }
+                        ?>
                         <form action="categories.php" method="post">
                             <div class="form-group">
                                 <label for="cat_title">Add Category</label>
@@ -32,7 +46,7 @@ ob_start();
                             </div>
                         </form>
 
-                        <?php include 'includes/edit_categories.php';?> 
+<?php include 'includes/edit_categories.php';?> 
 
                     </div>
 

@@ -2,7 +2,17 @@
 include 'includes/admin_header.php';
 
 if (isset($_SESSION['username'])) {
-    
+    $username = $_SESSION['username'];
+    $query = "SELECT * FROM users WHERE username = '{$username}'";
+    $select_from_users = mysqli_query($connection, $query);
+    while ($row = mysqli_fetch_array($select_from_users)) {
+        $user_firstname = $row['user_firstname'];
+        $user_lastname = $row['user_lastname'];
+        $user_password = $row['user_password'];
+        $username = $row['username'];
+        $user_email = $row['user_email'];
+        $user_role = $row['user_role'];
+    }
 }
 ?>
 
@@ -34,20 +44,8 @@ if (isset($_SESSION['username'])) {
                         </div>
 
                         <div class="form-group">
-                            <select name="user_role" id="">
-                                <option value="<?php echo $user_role;?>"><?php
-                                    $upf_user_role = ucfirst($user_role);
-                                    echo $upf_user_role;
-                                    ?></option>
-
-                                <?php
-                                if ($user_role == 'admin') {
-                                    echo '<option value="subscriber">Subscriber</option>';
-                                } else {
-                                    echo '<option value="admin">Admin</option>';
-                                }
-                                ?>         
-                            </select>
+                             <label for="user_lastname">User Role</label>
+                            <input type="text" class="form-control" name="user_role" value="<?php echo $user_role;?>">
                         </div>
 
                         <div class="form-group">
@@ -69,10 +67,6 @@ if (isset($_SESSION['username'])) {
                                 <label for="user_image">User Image</label>
                                 <input type="file" name="user_image">
                             </div>-->
-
-                        <div class="form-group">
-                            <input class="btn btn-primary" type="submit" name="edit_user" value="Update">
-                        </div>
                     </form>        
                 </div>
             </div>

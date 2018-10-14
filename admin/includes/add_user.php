@@ -16,7 +16,6 @@ if (isset($_POST['create_user'])) {
     $query = "INSERT INTO users (username, user_password, user_firstname, user_lastname, user_email, user_role) "
     ."VALUE('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}')";
 
-    echo $query;
     $create_user_query = mysqli_query($connection, $query);
     confirmQuery($create_user_query);
 }
