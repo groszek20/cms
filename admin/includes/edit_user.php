@@ -23,8 +23,6 @@ if (isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_role = $_POST['user_role'];
 
-//    move_uploaded_file($post_image_temp, "../images/$post_image");
-
     $query = "UPDATE users SET username='$username', user_password='$user_password', "
     ."user_firstname='$user_firstname', user_lastname='$user_lastname', "
     ."user_email='$user_email', user_role='$user_role' WHERE user_id = '$the_user_id'";
@@ -75,11 +73,6 @@ if (isset($_POST['edit_user'])) {
         <label for="user_email">E-Mail</label>
         <input type="email" class="form-control" name="user_email" value="<?php echo $user_email;?>">
     </div>
-
-    <!--    <div class="form-group">
-            <label for="user_image">User Image</label>
-            <input type="file" name="user_image">
-        </div>-->
 
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="edit_user" value="Update">

@@ -1,5 +1,6 @@
 <?php
 include 'includes/admin_header.php';
+include '../admin/functions.php';
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
@@ -14,6 +15,23 @@ if (isset($_SESSION['username'])) {
         $user_role = $row['user_role'];
     }
 }
+
+if (isset($_POST['edit_user'])) {
+    $user_firstname = $_POST['user_firstname'];
+    $user_lastname = $_POST['user_lastname'];
+    $user_password = $_POST['user_password'];
+    $username = $_POST['username'];
+    $user_email = $_POST['user_email'];
+    $user_role = $_POST['user_role'];
+
+    $query = "UPDATE users SET username='$username', user_password='$user_password', "
+    ."user_firstname='$user_firstname', user_lastname='$user_lastname', "
+    ."user_email='$user_email', user_role='$user_role' WHERE username = '$username'";
+
+    $update_user_query = mysqli_query($connection, $query);
+    confirmQuery($update_user_query);
+}
+
 ?>
 
 <div id="wrapper">
@@ -44,8 +62,20 @@ if (isset($_SESSION['username'])) {
                         </div>
 
                         <div class="form-group">
-                             <label for="user_lastname">User Role</label>
-                            <input type="text" class="form-control" name="user_role" value="<?php echo $user_role;?>">
+                            <select name="user_role" id="">
+                                <option value="<?php echo $user_role;?>"><?php
+                                    $upf_user_role = ucfirst($user_role);
+                                    echo $upf_user_role;
+                                    ?></option>
+
+                                <?php
+                                if ($user_role == 'admin') {
+                                    echo '<option value="subscriber">Subscriber</option>';
+                                } else {
+                                    echo '<option value="admin">Admin</option>';
+                                }
+                                ?>         
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -62,11 +92,9 @@ if (isset($_SESSION['username'])) {
                             <label for="user_email">E-Mail</label>
                             <input type="email" class="form-control" name="user_email" value="<?php echo $user_email;?>">
                         </div>
-
-                        <!--    <div class="form-group">
-                                <label for="user_image">User Image</label>
-                                <input type="file" name="user_image">
-                            </div>-->
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" name="edit_user" value="Update">
+                        </div>
                     </form>        
                 </div>
             </div>
