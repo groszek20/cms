@@ -1,5 +1,4 @@
 <?php
-
 include '../admin/functions.php';
 
 if (isset($_POST['create_post'])) {
@@ -28,8 +27,8 @@ if (isset($_POST['create_post'])) {
         <label for="title">Post Title</label>
         <input type="text" class="form-control" name="title">
     </div>
-    
-        <div class="form-group">
+
+    <div class="form-group">
         <select name="post_category_id" id="post_category">
 
             <?php
@@ -51,9 +50,12 @@ if (isset($_POST['create_post'])) {
     </div>
 
     <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status">
+        <select name="post_status" id="post_status">
+            <option value='draft'>draft</option>
+            <option value='published'>publish</option>
+        </select>
     </div>
+
 
     <div class="form-group">
         <label for="post_image">Post Image</label>

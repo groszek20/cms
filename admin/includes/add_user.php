@@ -18,6 +18,8 @@ if (isset($_POST['create_user'])) {
 
     $create_user_query = mysqli_query($connection, $query);
     confirmQuery($create_user_query);
+    
+    echo "User created: " . "<a href='http://localhost/cms/admin/users.php?source=view_all_users'>view users</a>";
 }
 ?>
 
