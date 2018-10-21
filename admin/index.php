@@ -135,6 +135,21 @@ include 'includes/admin_header.php';
                 </div>
             </div>
             <!-- /.row -->
+
+            <?php
+            $query_draft_posts = "SELECT * FROM posts WHERE post_status='draft";
+            $select_all_draft_categories = mysqli_query($connection, $query_draft_posts);
+            $draft_posts_counts = mysqli_num_rows($select_all_users);
+
+            $query_comments_status = "SELECT * FROM comments WHERE comment_status='approved'";
+            $select_all_comments_status = mysqli_query($connection, $query_comments_status);
+            $comment_status_counts = mysqli_num_rows($select_all_comments_status);
+
+            $query_user_role = "SELECT * FROM users WHERE user_role='subscriber'";
+            $select_all_user_roles = mysqli_query($connection, $query_user_role);
+            $select_all_user_roles = mysqli_num_rows($select_all_user_roles);
+            ?>
+
             <div class="row">
                 <script type="text/javascript">
                     google.charts.load('current', {'packages': ['bar']});
@@ -143,13 +158,13 @@ include 'includes/admin_header.php';
                     function drawChart() {
                         var data = google.visualization.arrayToDataTable([
                             ['Date', 'Count'],
-                            <?php
-                            $element_text = ['Active Posts', 'Categories', 'Users', 'Comments'];
-                            $element_count = [$post_counts, $categories_counts , $users_counts, $comments_counts];
-                            for($i=0; $i<4; $i++){
-                                echo "['{$element_text[$i]}'".","."{$element_count[$i]}],";
-                            }
-                            ?>
+<?php
+$element_text = ['Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Approved Comments'];
+$element_count = [$post_counts, $draft_posts_counts, $categories_counts, $users_counts, $select_all_user_roles, $comments_counts, $comment_status_counts];
+for ($i = 0; $i < 7; $i++) {
+    echo "['{$element_text[$i]}'".","."{$element_count[$i]}],";
+}
+?>
                         ]);
 
                         var options = {
