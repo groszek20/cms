@@ -137,9 +137,13 @@ include 'includes/admin_header.php';
             <!-- /.row -->
 
             <?php
-            $query_draft_posts = "SELECT * FROM posts WHERE post_status='draft";
-            $select_all_draft_categories = mysqli_query($connection, $query_draft_posts);
-            $draft_posts_counts = mysqli_num_rows($select_all_users);
+            $query_posts = "SELECT * FROM posts";
+            $select_all_posts = mysqli_query($connection, $query_posts);
+            $all_post_counts = mysqli_num_rows($select_all_posts);
+            
+            $query_draft_posts = "SELECT * FROM posts WHERE post_status='draft'";
+            $select_all_draft_posts = mysqli_query($connection, $query_draft_posts);
+            $draft_posts_counts = mysqli_num_rows($select_all_draft_posts);
 
             $query_comments_status = "SELECT * FROM comments WHERE comment_status='approved'";
             $select_all_comments_status = mysqli_query($connection, $query_comments_status);
@@ -147,7 +151,7 @@ include 'includes/admin_header.php';
 
             $query_user_role = "SELECT * FROM users WHERE user_role='subscriber'";
             $select_all_user_roles = mysqli_query($connection, $query_user_role);
-            $select_all_user_roles = mysqli_num_rows($select_all_user_roles);
+            $user_roles_counts = mysqli_num_rows($select_all_user_roles);
             ?>
 
             <div class="row">
@@ -159,9 +163,9 @@ include 'includes/admin_header.php';
                         var data = google.visualization.arrayToDataTable([
                             ['Date', 'Count'],
 <?php
-$element_text = ['Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Approved Comments'];
-$element_count = [$post_counts, $draft_posts_counts, $categories_counts, $users_counts, $select_all_user_roles, $comments_counts, $comment_status_counts];
-for ($i = 0; $i < 7; $i++) {
+$element_text = ['All Posts','Active Posts', 'Draft Posts', 'Categories', 'Users', 'Subscribers', 'Comments', 'Approved Comments'];
+$element_count = [$all_post_counts, $post_counts, $draft_posts_counts, $categories_counts, $users_counts, $user_roles_counts, $comments_counts, $comment_status_counts];
+for ($i = 0; $i < 8; $i++) {
     echo "['{$element_text[$i]}'".","."{$element_count[$i]}],";
 }
 ?>
