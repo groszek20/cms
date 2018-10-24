@@ -1,6 +1,6 @@
 <?php
 include 'includes/admin_header.php';
-//include 'functions.php';
+include 'functions.php';
 ob_start();
 ?>
 
@@ -47,6 +47,7 @@ ob_start();
                         </form>
 
 <?php include 'includes/edit_categories.php';?> 
+                
 
                     </div>
 

@@ -21,7 +21,7 @@ if (isset($_POST['create_post'])) {
     confirmQuery($create_post_query);
 }
 ?>
-
+        
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="title">Post Title</label>
@@ -69,13 +69,15 @@ if (isset($_POST['create_post'])) {
 
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <textarea class="form-control" name="post_content" id="" cols="30" rows="10">
+        <textarea class="form-control" name="post_content" id="body" cols="70" rows="60">
         </textarea>
-    </div>
 
+    </div>
     <div class="form-group">
         <input class="btn btn-primary" type="submit" name="create_post" value="Publish Post">
     </div>
+
+</head>
 </form>
 
 

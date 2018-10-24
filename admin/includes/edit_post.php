@@ -74,7 +74,7 @@ if (isset($_POST['update_post'])) {
     
         <div class="form-group">
         <select name="post_status" id="post_status">
-            <option value='{$post_status}'><?php echo $post_status; ?></option>
+            <option value="<?php echo $post_status;?>"><?php echo $post_status; ?></option>
             <?php 
             if($post_status == 'published'){
                 echo '<option value="draft">draft</option>';
