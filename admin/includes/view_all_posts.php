@@ -36,7 +36,7 @@ if(isset($_POST['checkBoxArray']))
             </div>
             <div class="col-xs-4">
                 <input type="submit" name="submit" class="btn btn-success" value="Apply">
-                <a class="btn btn-primary" a href="add_post.php">Add New</a>
+                <a class="btn btn-primary" a href="posts.php?source=add_post">Add New</a>
             </div>
             <thead>
                 <tr>
@@ -76,7 +76,7 @@ if(isset($_POST['checkBoxArray']))
                     <?php
                     echo "<td>$post_id</td>";
                     echo "<td>$post_author</td>";
-                    echo "<td>$post_title</td>";
+                    echo "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
 
                     $query_title = "SELECT * FROM `category` WHERE `cat_id` = $post_category_id  ";
                     $select_categories = mysqli_query($connection, $query_title);

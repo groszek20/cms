@@ -40,6 +40,8 @@ if(!isset($_SESSION['user_role'])){
 
 <script src="js/jquery.js"></script>
 
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
 
 </head>
