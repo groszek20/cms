@@ -45,7 +45,7 @@
                 <img class="img-responsive" src="images/<?php echo $post_image;?>" alt="">
                 <hr>
                 <p><?php echo $post_content;?></p>
-                
+
                 <hr>
                 <?php
             }
@@ -61,15 +61,18 @@
                 $comment_email = $_POST['comment_email'];
                 $comment_content = $_POST['comment'];
 
-                $query_comment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)"
-                ."VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
-                $create_comment_query = mysqli_query($connection, $query_comment);
-                if (!$create_comment_query) {
-                    die('QUERY FAILED'.mysqli_error($connection));
+                if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content)) {
+                    $query_comment = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)"
+                    ."VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', 'unapproved', now())";
+                    $create_comment_query = mysqli_query($connection, $query_comment);
+                    if (!$create_comment_query) {
+                        die('QUERY FAILED'.mysqli_error($connection));
+                    }
+                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id";
+                    $update_query_count = mysqli_query($connection, $query);
+                } else {
+                    echo "<script>alert('Fields cannot be empty')</script>";
                 }
-
-                $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id";
-                $update_query_count = mysqli_query($connection, $query);
             }
             ?>
             <!-- Comments Form -->
@@ -98,16 +101,16 @@
             <hr>
 
             <!-- Posted Comments -->
-            <?php
-            $query = "SELECT * FROM `comments` WHERE comment_post_id = {$the_post_id} AND comment_status = 'approved' ORDER BY comment_id DESC";
+<?php
+$query = "SELECT * FROM `comments` WHERE comment_post_id = {$the_post_id} AND comment_status = 'approved' ORDER BY comment_id DESC";
 
-            $select_comment_query = mysqli_query($connection, $query);
+$select_comment_query = mysqli_query($connection, $query);
 
-            while ($row = mysqli_fetch_array($select_comment_query)) {
-                $comment_date = $row['comment_date'];
-                $comment_content = $row['comment_content'];
-                $comment_author = $row['comment_author'];
-                ?>
+while ($row = mysqli_fetch_array($select_comment_query)) {
+    $comment_date = $row['comment_date'];
+    $comment_content = $row['comment_content'];
+    $comment_author = $row['comment_author'];
+    ?>
                 <!-- Comment -->
                 <div class="media">
                     <a class="pull-left" href="#">
@@ -117,20 +120,20 @@
                         <h4 class="media-heading"><?php echo $comment_author;?>
                             <small><?php echo $comment_date;?></small>
                         </h4>
-                        <?php echo $comment_content;?>
+    <?php echo $comment_content;?>
                     </div>
                 </div>
-                <?php
-            }
-            ?>
+    <?php
+}
+?>
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
-        <?php include "includes/sidebar.php";?>
+<?php include "includes/sidebar.php";?>
 
     </div>
     <!-- /.row -->
 
     <hr>
     <!-- Footer -->
-    <?php include "includes/footer.php";?>
+<?php include "includes/footer.php";?>
