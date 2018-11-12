@@ -2,6 +2,7 @@
 <?php include "includes/header.php";?>
 
 <?php
+$message = "";
 if (isset($_POST['submit'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -10,8 +11,9 @@ if (isset($_POST['submit'])) {
     $username = mysqli_real_escape_string($connection, $username);
     $email = mysqli_real_escape_string($connection, $email);
     $password = mysqli_real_escape_string($connection, $password);
-
-    $query = "SELECT randSalt FROM users";
+    
+    if(!empty($username) && !empty($email) && !empty($password)){
+        $query = "SELECT randSalt FROM users";
     $select_randasalt_query = mysqli_query($connection, $query);
 
     if (!$select_randasalt_query) {
@@ -20,6 +22,7 @@ if (isset($_POST['submit'])) {
 
     $row = mysqli_fetch_array($select_randasalt_query);
     $salt = $row['randSalt'];
+    $password = crypt($password, $salt);
     $insert_query = "INSERT INTO users (username, user_password, user_email, user_role) "
     ."VALUE('{$username}', '{$password}', '{$email}', 'subscriber')";
 
@@ -28,6 +31,12 @@ if (isset($_POST['submit'])) {
     if (!$register_user_query) {
         die("QUERY FAILED".mysqli_errno($connection));
     }
+    $message = "Your registration has been submitted";
+    } else {
+        $message = "Fields cannot be empty";
+    } 
+
+    
 }
 ?>
 <!-- Navigation -->
@@ -45,6 +54,7 @@ if (isset($_POST['submit'])) {
                     <div class="form-wrap">
                         <h1>Register</h1>
                         <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
+                            <h6 class="text-center"><?php echo $message?></h6>
                             <div class="form-group">
                                 <label for="username" class="sr-only">username</label>
                                 <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
