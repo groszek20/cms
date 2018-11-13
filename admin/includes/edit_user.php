@@ -23,12 +23,24 @@ if (isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_role = $_POST['user_role'];
 
-    $query = "UPDATE users SET username='$username', user_password='$user_password', "
+    $randsalt_query = "SELECT randSalt FROM users";
+    $select_randasalt_query = mysqli_query($connection, $randsalt_query);
+
+    if (!$select_randasalt_query) {
+        die("QUERY FAILED".mysqli_errno($connection));
+    }
+
+    $row = mysqli_fetch_array($select_randasalt_query);
+    $salt = $row['randSalt'];
+    $hashed_password = crypt($user_password, $salt);
+
+    $query = "UPDATE users SET username='$username', user_password='$hashed_password', "
     ."user_firstname='$user_firstname', user_lastname='$user_lastname', "
     ."user_email='$user_email', user_role='$user_role' WHERE user_id = '$the_user_id'";
 
     $update_user_query = mysqli_query($connection, $query);
     confirmQuery($update_user_query);
+        Echo "<p class='bg-success'><b>User updated</b>. <a href='../admin/users.php?source=view_all_users'>View Users</a>";
 }
 ?>
 
@@ -45,15 +57,16 @@ if (isset($_POST['edit_user'])) {
 
     <div class="form-group">
         <select name="user_role" id="">
-            <option value="<?php echo $user_role; ?>"><?php 
-            $upf_user_role = ucfirst ($user_role);
-            echo $upf_user_role; ?></option>
-            
-            <?php 
-            if($user_role == 'admin'){
+            <option value="<?php echo $user_role;?>"><?php
+                $upf_user_role = ucfirst($user_role);
+                echo $upf_user_role;
+                ?></option>
+
+            <?php
+            if ($user_role == 'admin') {
                 echo '<option value="subscriber">Subscriber</option>';
             } else {
-                 echo '<option value="admin">Admin</option>';
+                echo '<option value="admin">Admin</option>';
             }
             ?>         
         </select>
