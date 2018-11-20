@@ -20,35 +20,40 @@
             <?php
             if (isset($_GET['p_id'])) {
                 $the_post_id = $_GET['p_id'];
-            }
-            $query = "select * from posts WHERE post_id = ".$the_post_id;
-            $result = mysqli_query($connection, $query);
+                $view_query = "UPDATE posts SET post_view_counts = post_view_counts + 1 WHERE post_id = $the_post_id";
+                $send_query = mysqli_query($connection, $view_query);
+                
+                $query = "select * from posts WHERE post_id = ".$the_post_id;
+                $result = mysqli_query($connection, $query);
 
-            while ($row = mysqli_fetch_assoc($result)) {
-                $post_id = $row['post_id'];
-                $post_title = $row['post_title'];
-                $post_author = $row['post_author'];
-                $post_date = $row['post_date'];
-                $post_content = $row['post_content'];
-                $post_image = $row['post_image'];
-                $post_tags = $row['post_tags'];
-                ?>
-                <!-- First Blog Post -->
-                <h2>
-                    <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title;?></a>
-                </h2>
-                <p class="lead">
-                    by <a href="index.php"><?php echo $post_author;?></a>
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
-                <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image;?>" alt="">
-                <hr>
-                <p><?php echo $post_content;?></p>
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    $post_author = $row['post_author'];
+                    $post_date = $row['post_date'];
+                    $post_content = $row['post_content'];
+                    $post_image = $row['post_image'];
+                    $post_tags = $row['post_tags'];
+                    ?>
+                    <!-- First Blog Post -->
+                    <h2>
+                        <a href="post.php?p_id=<?php echo $post_id;?>"><?php echo $post_title;?></a>
+                    </h2>
+                    <p class="lead">
+                        by <a href="index.php"><?php echo $post_author;?></a>
+                    </p>
+                    <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
+                    <hr>
+                    <img class="img-responsive" src="images/<?php echo $post_image;?>" alt="">
+                    <hr>
+                    <p><?php echo $post_content;?></p>
 
-                <hr>
-                <?php
-            }
+                    <hr>
+                    <?php
+                }
+            } else {
+                header("Location: index.php");
+            };
             ?>
             <!-- Blog Comments -->
 
@@ -101,16 +106,16 @@
             <hr>
 
             <!-- Posted Comments -->
-<?php
-$query = "SELECT * FROM `comments` WHERE comment_post_id = {$the_post_id} AND comment_status = 'approved' ORDER BY comment_id DESC";
+            <?php
+            $query = "SELECT * FROM `comments` WHERE comment_post_id = {$the_post_id} AND comment_status = 'approved' ORDER BY comment_id DESC";
 
-$select_comment_query = mysqli_query($connection, $query);
+            $select_comment_query = mysqli_query($connection, $query);
 
-while ($row = mysqli_fetch_array($select_comment_query)) {
-    $comment_date = $row['comment_date'];
-    $comment_content = $row['comment_content'];
-    $comment_author = $row['comment_author'];
-    ?>
+            while ($row = mysqli_fetch_array($select_comment_query)) {
+                $comment_date = $row['comment_date'];
+                $comment_content = $row['comment_content'];
+                $comment_author = $row['comment_author'];
+                ?>
                 <!-- Comment -->
                 <div class="media">
                     <a class="pull-left" href="#">
@@ -120,20 +125,20 @@ while ($row = mysqli_fetch_array($select_comment_query)) {
                         <h4 class="media-heading"><?php echo $comment_author;?>
                             <small><?php echo $comment_date;?></small>
                         </h4>
-    <?php echo $comment_content;?>
+                        <?php echo $comment_content;?>
                     </div>
                 </div>
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
         </div>
 
         <!-- Blog Sidebar Widgets Column -->
-<?php include "includes/sidebar.php";?>
+        <?php include "includes/sidebar.php";?>
 
     </div>
     <!-- /.row -->
 
     <hr>
     <!-- Footer -->
-<?php include "includes/footer.php";?>
+    <?php include "includes/footer.php";?>

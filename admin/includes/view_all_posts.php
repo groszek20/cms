@@ -71,6 +71,7 @@
                     <th>Image</th>
                     <th>Tags</th>
                     <th>Comments</th>
+                    <th>Views</th>
                     <th>Date</th>
                     <th>Delete</th>
                     <th>Edit</th>
@@ -92,6 +93,7 @@
                     $post_content = $row['post_content'];
                     $post_category_id = $row['post_category_id'];
                     $post_comment_count = $row['post_comment_count'];
+                    $post_view_counts = $row['post_view_counts'];
                     echo "<tr>";
                     ?>
                 <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id;?>'></td>
@@ -112,6 +114,7 @@
                 echo "<td><img width='100' src='../images/$post_image' alt='image'></td>";
                 echo "<td>$post_tags</td>";
                 echo "<td>$post_comment_count</td>";
+                echo "<td>$post_view_counts</td>";
                 echo "<td>$post_date</td>";
                 echo "<td><a onclick=\"javascript: return confirm('Are you sure?') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
                 echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
