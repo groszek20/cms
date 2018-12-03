@@ -8,21 +8,23 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    if(!empty($username) && !empty($email) && !empty($password)){
     $username = mysqli_real_escape_string($connection, $username);
     $email = mysqli_real_escape_string($connection, $email);
     $password = mysqli_real_escape_string($connection, $password);
+    $password = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
     
-    if(!empty($username) && !empty($email) && !empty($password)){
-        $query = "SELECT randSalt FROM users";
-    $select_randasalt_query = mysqli_query($connection, $query);
-
-    if (!$select_randasalt_query) {
-        die("QUERY FAILED".mysqli_errno($connection));
-    }
-
-    $row = mysqli_fetch_array($select_randasalt_query);
-    $salt = $row['randSalt'];
-    $password = crypt($password, $salt);
+//    
+//        $query = "SELECT randSalt FROM users";
+//    $select_randasalt_query = mysqli_query($connection, $query);
+//
+//    if (!$select_randasalt_query) {
+//        die("QUERY FAILED".mysqli_errno($connection));
+//    }
+//
+//    $row = mysqli_fetch_array($select_randasalt_query);
+//    $salt = $row['randSalt'];
+//    $password = crypt($password, $salt);
     $insert_query = "INSERT INTO users (username, user_password, user_email, user_role) "
     ."VALUE('{$username}', '{$password}', '{$email}', 'subscriber')";
 
@@ -35,9 +37,8 @@ if (isset($_POST['submit'])) {
     } else {
         $message = "Fields cannot be empty";
     } 
-
-    
 }
+    
 ?>
 <!-- Navigation -->
 
