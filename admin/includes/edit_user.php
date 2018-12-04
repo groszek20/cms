@@ -23,24 +23,25 @@ if (isset($_POST['edit_user'])) {
     $user_email = $_POST['user_email'];
     $user_role = $_POST['user_role'];
 
-    $randsalt_query = "SELECT randSalt FROM users";
-    $select_randasalt_query = mysqli_query($connection, $randsalt_query);
+    if (!empty($user_password)) {
+        $query_password = "SELECT user_password FROM users WHERE user_id = $the_user_id";
+        $get_user_query = mysqli_query($connection, $query_password);
+        confirmQuery($get_user_query);
+        $row = mysqli_fetch_array($get_user_query);
+        $db_user_password = $row['user_password'];
 
-    if (!$select_randasalt_query) {
-        die("QUERY FAILED".mysqli_errno($connection));
-    }
+        if ($db_user_password != $user_password) {
+            $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 12));
+        }
 
-    $row = mysqli_fetch_array($select_randasalt_query);
-    $salt = $row['randSalt'];
-    $hashed_password = crypt($user_password, $salt);
+        $query = "UPDATE users SET username='$username', user_password='$user_password', "
+        ."user_firstname='$user_firstname', user_lastname='$user_lastname', "
+        ."user_email='$user_email', user_role='$user_role' WHERE user_id = '$the_user_id'";
 
-    $query = "UPDATE users SET username='$username', user_password='$hashed_password', "
-    ."user_firstname='$user_firstname', user_lastname='$user_lastname', "
-    ."user_email='$user_email', user_role='$user_role' WHERE user_id = '$the_user_id'";
-
-    $update_user_query = mysqli_query($connection, $query);
-    confirmQuery($update_user_query);
+        $update_user_query = mysqli_query($connection, $query);
+        confirmQuery($update_user_query);
         Echo "<p class='bg-success'><b>User updated</b>. <a href='../admin/users.php?source=view_all_users'>View Users</a>";
+    }
 }
 ?>
 
