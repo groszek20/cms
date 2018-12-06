@@ -13,6 +13,8 @@ if (isset($_GET['edit'])) {
         $user_email = $row['user_email'];
         $user_role = $row['user_role'];
     }
+} else {
+    header("Location: index.php");
 }
 
 if (isset($_POST['edit_user'])) {
@@ -42,7 +44,7 @@ if (isset($_POST['edit_user'])) {
         confirmQuery($update_user_query);
         Echo "<p class='bg-success'><b>User updated</b>. <a href='../admin/users.php?source=view_all_users'>View Users</a>";
     }
-}
+} 
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -75,7 +77,7 @@ if (isset($_POST['edit_user'])) {
 
     <div class="form-group">
         <label for="user_password">Password</label>
-        <input type="password" class="form-control" name="user_password" value="<?php echo $user_password;?>">
+        <input type="password" class="form-control" name="user_password" autocomplete="off">
     </div>
 
     <div class="form-group">
