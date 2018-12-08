@@ -113,7 +113,14 @@
                 echo "<td>$post_status</td>";
                 echo "<td><img width='100' src='../images/$post_image' alt='image'></td>";
                 echo "<td>$post_tags</td>";
-                echo "<td>$post_comment_count</td>"; 
+
+                $query_count = "SELECT * FROM comments WHERE comment_post_id = $post_id";
+                $send_query_count = mysqli_query($connection, $query_count);
+                $row = mysqli_fetch_array($send_query_count);
+                $comment_id = $row['comment_id'];
+                $post_comment_count = mysqli_num_rows($send_query_count);
+
+                echo "<td><a href='post_comments.php?id=$post_id'>$post_comment_count</td>";
                 echo "<td><a href='posts.php?reset={$post_id}'>$post_view_counts</a></td>";
                 echo "<td>$post_date</td>";
                 echo "<td><a onclick=\"javascript: return confirm('Are you sure?') \" href='posts.php?delete={$post_id}'>Delete</a></td>";
