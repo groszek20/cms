@@ -85,6 +85,7 @@
                 while ($row = mysqli_fetch_assoc($select_posts)) {
                     $post_id = $row['post_id'];
                     $post_author = $row['post_author'];
+                    $post_user = $row['post_user'];
                     $post_title = $row['post_title'];
                     $post_date = $row['post_date'];
                     $post_image = $row['post_image'];
@@ -100,7 +101,12 @@
 
                 <?php
                 echo "<td>$post_id</td>";
-                echo "<td>$post_author</td>";
+                if(isset($post_author) || !empty($post_author)){
+                    echo "<td>$post_author</td>";
+                } elseif(isset($post_user) || !empty($post_user)){
+                    echo "<td>$post_user</td>";
+                }
+                
                 echo "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
 
                 $query_title = "SELECT * FROM `category` WHERE `cat_id` = $post_category_id  ";
