@@ -35,7 +35,7 @@
                     while ($row = mysqli_fetch_assoc($search_query)) {
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
-                        $post_author = $row['post_author'];
+                        $post_user = $row['post_author'];
                         $post_date = $row['post_date'];
                         $post_content = $row['post_content'];
                         $post_image = $row['post_image'];
@@ -46,7 +46,7 @@
                             <a href="#"><?php echo $post_title;?></a>
                         </h2>
                         <p class="lead">
-                            by <a href="index.php"><?php echo $post_author;?></a>
+                            by <a href="index.php"><?php echo $post_user;?></a>
                         </p>
                         <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
                         <hr>

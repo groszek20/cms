@@ -25,7 +25,7 @@
                     $select_posts = mysqli_query($connection, $query);
                     while ($row = mysqli_fetch_assoc($select_posts)) {
                         $post_id = $row['post_id'];
-                        $post_author = $row['post_author'];
+                        $post_user = $row['post_user'];
                         $post_title = $row['post_title'];
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
@@ -35,8 +35,8 @@
                         $post_category_id = $row['post_category_id'];
                         $post_comment_count = $row['post_comment_count'];
                     }
-                    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) "
-                    ."VALUE({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}','{$post_status}')";
+                    $query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status) "
+                    ."VALUE({$post_category_id}, '{$post_title}', '{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tags}','{$post_status}')";
 
                     $create_post_query = mysqli_query($connection, $query);
                     confirmQuery($create_post_query);
@@ -64,7 +64,7 @@
                 <tr>
                     <th><input id="selectAllBoxes" type="checkbox" value='<?php echo $post_id;?>'></th>
                     <th>Id</th>
-                    <th>Author</th>
+                    <th>User</th>
                     <th>Title</th>
                     <th>Category</th>
                     <th>Status</th>
@@ -84,7 +84,6 @@
                 $select_posts = mysqli_query($connection, $query);
                 while ($row = mysqli_fetch_assoc($select_posts)) {
                     $post_id = $row['post_id'];
-                    $post_author = $row['post_author'];
                     $post_user = $row['post_user'];
                     $post_title = $row['post_title'];
                     $post_date = $row['post_date'];
@@ -101,8 +100,8 @@
 
                 <?php
                 echo "<td>$post_id</td>";
-                if(isset($post_author) || !empty($post_author)){
-                    echo "<td>$post_author</td>";
+                if(isset($post_user) || !empty($post_user)){
+                    echo "<td>$post_user</td>";
                 } elseif(isset($post_user) || !empty($post_user)){
                     echo "<td>$post_user</td>";
                 }
