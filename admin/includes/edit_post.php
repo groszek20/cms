@@ -6,7 +6,7 @@ if (isset($_GET['p_id'])) {
 
 
 
-$query = "SELECT * FROM `posts` WHERE post_id = {$the_post_id} ";
+$query = "SELECT * FROM `posts` where post_id=$the_post_id";
 $select_posts_by_id = mysqli_query($connection, $query);
 
 while ($row = mysqli_fetch_assoc($select_posts_by_id)) {
@@ -72,7 +72,6 @@ if (isset($_POST['update_post'])) {
     <div class="form-group">
         <label for="users">Users</label>
         <select name="post_user" id="">
-
             <?php
             $query = "SELECT * FROM `users`";
             $select_users = mysqli_query($connection, $query);
@@ -80,7 +79,7 @@ if (isset($_POST['update_post'])) {
             while ($row = mysqli_fetch_assoc($select_users)) {
                 $user_id = $row['user_id'];
                 $username = $row['username'];
-                echo "<option value='{$username}'>$username</option>";
+                echo "<option value='{$username}'>{$username}</option>";
             }
             ?>     
         </select>
@@ -92,13 +91,13 @@ if (isset($_POST['update_post'])) {
         <div class="form-group">
             <select name="post_status" id="post_status">
                 <option value="<?php echo $post_status;?>"><?php echo $post_status;?></option>
-                <?php
-                if ($post_status == 'published') {
-                    echo '<option value="draft">draft</option>';
-                } else {
-                    echo '<option value="published">publish</option>';
-                }
-                ?>
+<?php
+if ($post_status == 'published') {
+    echo '<option value="draft">draft</option>';
+} else {
+    echo '<option value="published">publish</option>';
+}
+?>
             </select>
         </div>
 
@@ -115,7 +114,7 @@ if (isset($_POST['update_post'])) {
         <div class="form-group">
             <label for="post_content">Post Content</label>
             <textarea class="form-control" name="post_content" id="body" cols="30" rows="10">
-                <?php echo $post_content;?>"
+<?php echo $post_content;?>"
             </textarea>
         </div>
 
