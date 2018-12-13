@@ -34,25 +34,37 @@
                 echo "<td>$user_role</td>";
                 echo "<td><a href='users.php?source=edit_user&edit={$user_id}'>Edit User</a></td>";
                 echo "<td><a href='users.php?delete={$user_id}'>Delete User</a></td>";
-                if ($user_role === 'admin'){
+                if ($user_role === 'admin') {
                     echo "<td><a href='users.php?change_to_subscriber={$user_id}'>Subscriber</a></td>";
                 } else {
                     echo "<td><a href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
                 }
                 echo "</tr>";
             }
+            if (isset($_GET['delete'])) {
+                if (isset($_SESSION['user_role'])) {
+                    if ($_SESSION['user_role'] == 'admin') {
+                        $the_user_id = mysqli_real_escape_string($connection, $_GET['delete']);
+                        $query = "DELETE FROM users WHERE user_id={$the_user_id}";
+                        $delete_query = mysqli_query($connection, $query);
+                        header("Location: ../admin/users.php");
+                    }
+                }
+            }
             ?>
+
         </tbody>
     </table>
 </div>
 
 <?php
-if (isset($_GET['delete'])) {
-    $the_user_id = $_GET['delete'];
-    $query = "DELETE FROM users WHERE user_id={$the_user_id}";
-    $delete_query = mysqli_query($connection, $query);
-    header("Location: ../admin/users.php");
-}
+//if (isset($_GET['delete'])) {
+//    if(isset($_SESSION['user_role'])){echo "sprawdzenie sesji: ".$_SESSION['user_role'];}
+//            $the_user_id = mysqli_real_escape_string($connection, $_GET['delete']);
+//            $query = "DELETE FROM users WHERE user_id={$the_user_id}";
+//            $delete_query = mysqli_query($connection, $query);
+//            header("Location: ../admin/users.php");
+//}
 
 if (isset($_GET['change_to_subscriber'])) {
     $the_user_id = $_GET['change_to_subscriber'];
