@@ -13,6 +13,7 @@
         <div class="col-md-8">
 
             <?php
+            $connectionPDO = getConnectionPDO();
             $per_page = 5;
             if (isset($_GET['page'])) {
                 $page = $_GET['page'];
@@ -27,11 +28,9 @@
             }
 
             $post_query_count = "SELECT * FROM posts";
-            $find_count = mysqli_query($connection, $post_query_count);
-            $count = mysqli_num_rows($find_count);
+            $count = $connectionPDO->query($post_query_count)->rowCount();
 
             $count = ceil($count / $per_page);
-
 
             $query = "select * from posts LIMIT $page_1,$per_page";
             $result = mysqli_query($connection, $query);

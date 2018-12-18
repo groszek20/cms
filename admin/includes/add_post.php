@@ -66,11 +66,6 @@ if (isset($_POST['create_post'])) {
             ?>     
         </select>
     </div>
-    
-<!--    <div class="form-group">
-        <label for="post_author">Post Author</label>
-        <input type="text" class="form-control" name="author">
-    </div>-->
 
     <div class="form-group">
         <select name="post_status" id="post_status">
