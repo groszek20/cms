@@ -34,9 +34,10 @@
                         $post_content = $row['post_content'];
                         $post_category_id = $row['post_category_id'];
                         $post_comment_count = $row['post_comment_count'];
+                        $post_view_counts = $row['post_view_counts'];
                     }
-                    $query = "INSERT INTO posts(post_category_id, post_title, post_user, post_date, post_image, post_content, post_tags, post_status) "
-                    ."VALUE({$post_category_id}, '{$post_title}', '{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tags}','{$post_status}')";
+                    $query = "INSERT INTO posts(post_category_id, post_title, post_author, post_user, post_date, post_image, post_content, post_tags, post_comment_count, post_status,post_view_counts) "
+                    ."VALUE({$post_category_id}, '{$post_title}', 'author','{$post_user}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}','{$post_status}', '{$post_view_counts}')";
 
                     $create_post_query = mysqli_query($connection, $query);
                     confirmQuery($create_post_query);
@@ -132,6 +133,16 @@
                 echo "<td><a href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
                 echo "</tr>";
             }
+                if (isset($_GET['delete'])) {
+                    if (isset($_SESSION['user_role'])) {
+                        if ($_SESSION['user_role'] == 'admin') {
+                            $the_post_id = $_GET['delete'];
+                            $query = "DELETE FROM posts WHERE post_id={$the_post_id}";
+                            $delete_query = mysqli_query($connection, $query);
+                            header("Location: ../admin/posts.php");
+                        }
+                    }
+                }
             ?>
 
             </tbody>
@@ -140,12 +151,6 @@
 </div>
 
 <?php
-if (isset($_GET['delete'])) {
-    $the_post_id = $_GET['delete'];
-    $query = "DELETE FROM posts WHERE post_id={$the_post_id}";
-    $delete_query = mysqli_query($connection, $query);
-    header("Location: ../admin/posts.php");
-}
 
 if (isset($_GET['reset'])) {
     $the_post_id = $_GET['reset'];

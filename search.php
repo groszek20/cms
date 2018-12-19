@@ -18,24 +18,22 @@
             </h1>
 
             <?php
+            $connectionPDO = getConnectionPDO();
             if (isset($_POST['submit'])) {
-                $search = $_POST['search'];
+                $query = "select * from posts where post_tags like '%{$_POST['search']}%'";
 
-                $query = "select * from posts where post_tags like '%$search%'";
-                $search_query = mysqli_query($connection, $query);
+//                if (!$search_query) {
+//                    die("QUERY FAILED ".$search_query->errorCode());
+//                }
 
-                if (!$search_query) {
-                    die("QUERY FAILED".mysqli_error($connection));
-                }
-
-                $count = mysqli_num_rows($search_query);
-                if ($count == 0) {
+                $result = $connectionPDO->query($query);
+                if ($result->rowCount() == 0) {
                     echo "<h2>No results found </h2>";
                 } else {
-                    while ($row = mysqli_fetch_assoc($search_query)) {
+                    while ($row = $result->fetch()) {
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
-                        $post_user = $row['post_author'];
+                        $post_user = $row['post_user'];
                         $post_date = $row['post_date'];
                         $post_content = $row['post_content'];
                         $post_image = $row['post_image'];
