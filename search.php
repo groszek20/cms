@@ -13,18 +13,16 @@
         <div class="col-md-8">
 
             <h1 class="page-header">
-                Page Heading
-                <small>Secondary Text</small>
+                Searching for: <?= $_POST['search']; ?>
             </h1>
 
             <?php
             $connectionPDO = getConnectionPDO();
             if (isset($_POST['submit'])) {
-                $query = "select * from posts where post_tags like '%{$_POST['search']}%'";
-
-//                if (!$search_query) {
-//                    die("QUERY FAILED ".$search_query->errorCode());
-//                }
+                $query = "select * from posts where post_tags like ".$connectionPDO->quote("%".$_POST['search']."%");
+                if (!$query) {
+                    die("QUERY FAILED ".$query->errorCode());
+                }
 
                 $result = $connectionPDO->query($query);
                 if ($result->rowCount() == 0) {
@@ -41,16 +39,16 @@
                         ?>
                         <!-- First Blog Post -->
                         <h2>
-                            <a href="#"><?php echo $post_title;?></a>
+                            <a href="#"><?= $post_title;?></a>
                         </h2>
                         <p class="lead">
-                            by <a href="index.php"><?php echo $post_user;?></a>
+                            by <a href="index.php"><?= $post_user;?></a>
                         </p>
-                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
+                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?= $post_date;?></p>
                         <hr>
-                        <img class="img-responsive" src="images/<?php echo $post_image;?>" alt="">
+                        <img class="img-responsive" src="images/<?= $post_image;?>" alt="">
                         <hr>
-                        <p><?php echo $post_content;?></p>
+                        <p><?= $post_content;?></p>
                         <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                         <hr>
