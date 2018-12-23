@@ -17,6 +17,10 @@
 
     <!-- Login Form -->
     <div class="well">
+        <?php if(isset($_SESSION['user_role'])):?>
+        <h4>Logged as <?=$_SESSION['username']; ?> </h4>
+        <a href="includes/logout.php" class="btn btn-primary">Logout</a>
+        <?php else: ?>
         <h4>Sign in</h4>
         <form action="includes/login.php" method="post">
             <div class="form-group">
@@ -30,6 +34,7 @@
             </div>
 
         </form>
+        <?php endif;?>
         <!-- /.input-group -->
     </div>
 
