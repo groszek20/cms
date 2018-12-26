@@ -87,13 +87,13 @@ if (isset($_POST['update_post'])) {
         <div class="form-group">
             <select name="post_status" id="post_status">
                 <option value="<?php echo $post_status;?>"><?php echo $post_status;?></option>
-<?php
-if ($post_status == 'published') {
-    echo '<option value="draft">draft</option>';
-} else {
-    echo '<option value="published">publish</option>';
-}
-?>
+                <?php
+                if ($post_status == 'published') {
+                    echo '<option value="draft">draft</option>';
+                } else {
+                    echo '<option value="published">publish</option>';
+                }
+                ?>
             </select>
         </div>
 
@@ -110,7 +110,7 @@ if ($post_status == 'published') {
         <div class="form-group">
             <label for="post_content">Post Content</label>
             <textarea class="form-control" name="post_content" id="body" cols="30" rows="10">
-<?php echo $post_content;?>"
+                <?php echo $post_content;?>"
             </textarea>
         </div>
 

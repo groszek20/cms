@@ -76,3 +76,16 @@ function confirmQuery($result) {
         die("QUERY FAILED .".mysqli_error($connection));
     }
 }
+
+function username_exist($username){
+    $connectionPDO = getConnectionPDO();
+    $query = "SELECT username FROM users WHERE username = '{$username}'";
+    $result = $connectionPDO->query($post_query_count)->rowCount();
+    confirmQuery($connectionPDO->query($post_query_count));
+    if ($result > 0){
+        return true;
+    } else {
+        return false;
+    }
+    
+}
