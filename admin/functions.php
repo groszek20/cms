@@ -89,3 +89,20 @@ function username_exist($username){
     }
     
 }
+
+function email_exist($email){
+    $connectionPDO = getConnectionPDO();
+    $query = "SELECT user_email FROM users WHERE user_email = '{$email}'";
+    $result = $connectionPDO->query($post_query_count)->rowCount();
+    confirmQuery($connectionPDO->query($post_query_count));
+    if ($result > 0){
+        return true;
+    } else {
+        return false;
+    }
+    
+}
+
+function redirect($location){
+    return header("Location: ".$location);
+}
