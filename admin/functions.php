@@ -164,6 +164,7 @@ function email_exist($email) {
 }
 
 function login_user($username, $password) {
+    session_start();
     global $connection;
     $username = mysqli_real_escape_string($connection, $username);
     $password = mysqli_real_escape_string($connection, $password);
