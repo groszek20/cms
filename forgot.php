@@ -5,7 +5,7 @@
 
 <?php
 
-//require './vendor/autoload.php';
+require './vendor/autoload.php';
 
     if(!isset($_GET['forgot'])){
 
