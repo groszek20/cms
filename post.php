@@ -22,7 +22,7 @@
                 $the_post_id = $_GET['p_id'];
                 $view_query = "UPDATE posts SET post_view_counts = post_view_counts + 1 WHERE post_id = $the_post_id";
                 $send_query = mysqli_query($connection, $view_query);
-                
+
                 $query = "select * from posts WHERE post_id = ".$the_post_id;
                 $result = mysqli_query($connection, $query);
 
@@ -44,11 +44,25 @@
                     </p>
                     <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date;?></p>
                     <hr>
-                    <img class="img-responsive" src="images/<?php echo $post_image;?>" alt="">
+                    <img class="img-responsive" src="/cms/images/<?php echo $post_image;?>" alt="">
                     <hr>
                     <p><?php echo $post_content;?></p>
 
                     <hr>
+                    <div class="row">
+
+                        <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"> Like</span></a></p>
+
+                    </div>
+
+                    <div class="row">
+
+                        <p class="pull-right">Like: 10</p>
+
+                    </div>
+                    <div class="clearfix">
+
+                    </div>
                     <?php
                 }
             } else {
@@ -75,7 +89,6 @@
                     }
                     $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 WHERE post_id = $the_post_id";
                     $update_query_count = mysqli_query($connection, $query);
-                    
                 } else {
                     echo "<script>alert('Fields cannot be empty')</script>";
                 }
@@ -143,3 +156,12 @@
     <hr>
     <!-- Footer -->
     <?php include "includes/footer.php";?>
+
+
+    <script>
+        $(document).ready(function(){
+            $('.like').click(function(){
+                console.log("IT Works")
+            });
+        });
+    </script>
